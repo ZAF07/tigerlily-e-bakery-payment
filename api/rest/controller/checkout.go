@@ -45,7 +45,7 @@ func (a CheckoutAPI) Checkout(c *gin.Context) {
 	if err != nil {
 		a.logs.ErrorLogger.Println("[CONTROLLER] Error getting response")
 		a.logs.InfoLogger.Printf("[CONTROLLER] Status of resp value: %+v\n",resp)
-		log.Fatalf("Error with DB : +%v", err)
+		log.Fatalf("Error with DB : %+v", err)
 		c.JSON(http.StatusInternalServerError,
 		gin.H{
 		"message": "Error checkout",
