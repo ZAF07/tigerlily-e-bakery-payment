@@ -21,8 +21,9 @@ func Router(r *gin.Engine) *gin.Engine {
 
 	// Checkout API Endpoint
 	checkoutAPI := controller.NewCheckoutAPI()
+	checkOut := r.Group("checkout")
+	
 	{
-		checkOut := r.Group("checkout")
 		{
 			checkOut.POST("", checkoutAPI.Checkout)
 		}

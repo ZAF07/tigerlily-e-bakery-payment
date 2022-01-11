@@ -19,7 +19,6 @@ type CheckoutAPI struct {
 	logs logger.Logger
 }
 
-// Init the DB here (open a connection to the DB) and pass it along to service and repo layer
 func NewCheckoutAPI() *CheckoutAPI {
 	return &CheckoutAPI{
 		db: db.NewDB(),
