@@ -1,9 +1,10 @@
 syntax = "proto3";
 
+// import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 option go_package = "/rpc";
 
 message Checkout {
-  string order_id = 1;
+  string order_id = 1; 
   string sku_id = 2;
   string customer_id = 3;
   string discount_code = 4;
