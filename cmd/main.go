@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/router"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
+	rpc "github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc/proto"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/env"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
