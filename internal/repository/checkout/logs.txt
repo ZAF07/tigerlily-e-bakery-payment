@@ -1,4 +1,0 @@
-[INFO] 2021/12/28 21:15:16 env.go:53: RUNNING ON DEVELOPMENT MODE
-[ERROR] 2021/12/28 21:15:16 db.go:29: Couldn't connect to Database dial tcp: lookup user=: no such host
-[INFO] 2021/12/28 21:15:39 env.go:53: RUNNING ON DEVELOPMENT MODE
-[ERROR] 2021/12/28 21:15:39 db.go:29: Couldn't connect to Database dial tcp: lookup user=: no such host
