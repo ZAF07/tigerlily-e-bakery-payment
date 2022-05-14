@@ -1,7 +1,7 @@
 package checkout
 
 import (
-	rpc "github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc/proto"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/models"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/jinzhu/gorm"

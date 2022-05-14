@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	rpc "github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc/proto"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
@@ -53,7 +53,7 @@ func (a CheckoutAPI) Checkout(c *gin.Context) {
 	})
 	return
 	}
-	
+
 	c.JSON(http.StatusOK,
 	gin.H{
 		"message": "Success checkout",
