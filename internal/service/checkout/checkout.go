@@ -63,6 +63,7 @@ func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutR
 	resp = &rpc.CheckoutResp{
 		Success: checkoutSuccess,
 		StatusUrl: statusURL,
+		Message: "",
 	}
 
 	return 
