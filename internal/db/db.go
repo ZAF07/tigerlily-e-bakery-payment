@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/env"
@@ -30,7 +29,6 @@ func connectDB() () {
 		log.Fatalf("Error connectiong to Database : %+v", err)
 	}
 	logs.InfoLogger.Println("Successfully connected to Database")
-	fmt.Println("SUCCEEDED CONNECTING TO DB")
 
 	ORM = db
 }

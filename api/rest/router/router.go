@@ -25,7 +25,7 @@ func Router(r *gin.Engine) *gin.Engine {
 	
 	{
 		{
-			checkOut.POST("", checkoutAPI.Checkout)
+			checkOut.POST("/stripe-checkout-session", checkoutAPI.StripeCheckoutSession)
 		}
 	}
 

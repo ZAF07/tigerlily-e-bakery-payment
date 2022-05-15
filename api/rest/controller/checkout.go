@@ -26,7 +26,7 @@ func NewCheckoutAPI() *CheckoutAPI {
 	}
 }
 
-func (a CheckoutAPI) Checkout(c *gin.Context) {
+func (a CheckoutAPI) StripeCheckoutSession(c *gin.Context) {
 	a.logs.InfoLogger.Println("[CONTROLLER] Checkout API running")
 
 	var req rpc.CheckoutReq
