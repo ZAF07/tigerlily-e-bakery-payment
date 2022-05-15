@@ -40,7 +40,7 @@ func (a CheckoutAPI) StripeCheckoutSession(c *gin.Context) {
 	service := checkout.NewCheckoutService(a.db)
 
 	// PROPERLY HANDLE ERROR FOR WHEN DB ERROR 
-	resp, err := service.Checkout(ctx, &req)
+	resp, err := service.CustomCheckout(ctx, &req)
 	if err != nil {
 		a.logs.ErrorLogger.Println("[CONTROLLER] Error getting response")
 		a.logs.InfoLogger.Printf("[CONTROLLER] Status of resp value: %+v\n",resp)
