@@ -29,6 +29,10 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 	}
 }
 
+	func (srv Service) Checkout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
+		return nil, err
+	}
+
 func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 	srv.logs.InfoLogger.Printf(" [SERVICE] Checkout service ran %+v", req)
 
