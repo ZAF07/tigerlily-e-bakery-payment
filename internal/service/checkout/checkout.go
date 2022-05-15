@@ -30,6 +30,7 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 }
 
 	func (srv Service) Checkout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
+		// Remove this
 		return nil, err
 	}
 
