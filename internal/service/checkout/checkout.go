@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/constants"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/stripe"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
@@ -39,8 +38,6 @@ func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutR
 
 	statusURL := ""
 
-	switch req.PaymentType {
-	case constants.STRIPE_PAYMENT:
 		// TO HANDLE PAYMENT STATUS RESPONSE (RETURN THE STATUS URL BACK TO THE CLIENT)
 		statusURL, err = stripe.CreateCheckoutSession() 
 		if err != nil {
@@ -50,7 +47,7 @@ func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutR
 			}
 			return
 		}
-	}
+
 
 	checkoutSuccess, err := srv.base.CreateNewOrder(req.CheckoutItems)
 	if err != nil {
