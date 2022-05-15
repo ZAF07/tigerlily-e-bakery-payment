@@ -58,39 +58,38 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 	}
 
 	return
-		return nil, err
 	}
 
-func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
-	srv.logs.InfoLogger.Printf(" [SERVICE] Checkout service ran %+v", req)
+// func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
+// 	srv.logs.InfoLogger.Printf(" [SERVICE] Checkout service ran %+v", req)
 
-	statusURL := ""
+// 	statusURL := ""
 
-		// TO HANDLE PAYMENT STATUS RESPONSE (RETURN THE STATUS URL BACK TO THE CLIENT)
-		statusURL, err = stripe.CreateCheckoutSession() 
-		if err != nil {
-			resp = &rpc.CheckoutResp{
-				Success: false,
-				StatusUrl: statusURL,
-			}
-			return
-		}
+// 		// TO HANDLE PAYMENT STATUS RESPONSE (RETURN THE STATUS URL BACK TO THE CLIENT)
+// 		statusURL, err = stripe.CreateCheckoutSession() 
+// 		if err != nil {
+// 			resp = &rpc.CheckoutResp{
+// 				Success: false,
+// 				StatusUrl: statusURL,
+// 			}
+// 			return
+// 		}
 
 
-	checkoutSuccess, err := srv.base.CreateNewOrder(req.CheckoutItems)
-	if err != nil {
-		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
-		srv.logs.ErrorLogger.Printf(" [SERVICE] RESULT FROM DS : %+v", checkoutSuccess)
-	}
+// 	checkoutSuccess, err := srv.base.CreateNewOrder(req.CheckoutItems)
+// 	if err != nil {
+// 		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
+// 		srv.logs.ErrorLogger.Printf(" [SERVICE] RESULT FROM DS : %+v", checkoutSuccess)
+// 	}
 
-	srv.logs.InfoLogger.Printf(" [SERVICE] CREATE NEW ORDER STATUS : %+v\n",checkoutSuccess)
+// 	srv.logs.InfoLogger.Printf(" [SERVICE] CREATE NEW ORDER STATUS : %+v\n",checkoutSuccess)
 
-	// USE ENUM AS ERROR CODES
-	resp = &rpc.CheckoutResp{
-		Success: checkoutSuccess,
-		StatusUrl: statusURL,
-		Message: "",
-	}
+// 	// USE ENUM AS ERROR CODES
+// 	resp = &rpc.CheckoutResp{
+// 		Success: checkoutSuccess,
+// 		StatusUrl: statusURL,
+// 		Message: "",
+// 	}
 
-	return 
-} 
+// 	return 
+// } 
