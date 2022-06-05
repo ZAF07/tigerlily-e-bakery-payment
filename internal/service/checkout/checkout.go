@@ -28,7 +28,7 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 	}
 }
 
-func (srv *Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
+func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 
 	resp = &rpc.CheckoutResp{
 		Success:   true,
@@ -39,7 +39,7 @@ func (srv *Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (r
 	return
 }
 
-func (srv *Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
+func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 	srv.logs.InfoLogger.Printf(" [SERVICE] Checkout service ran %+v", req)
 
 	statusURL := ""
