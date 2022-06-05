@@ -12,7 +12,7 @@ import (
 )
 
 type Service struct {
-	db *gorm.DB
+	db   *gorm.DB
 	base checkout.CheckoutRepo
 	logs logger.Logger
 	rpc.UnimplementedCheckoutServiceServer
@@ -21,39 +21,38 @@ type Service struct {
 var _ rpc.CheckoutServiceServer = (*Service)(nil)
 
 func NewCheckoutService(DB *gorm.DB) *Service {
-	return&Service{
-		db: DB,
+	return &Service{
+		db:   DB,
 		base: *checkout.NewCheckoutRepo(DB),
 		logs: *logger.NewLogger(),
 	}
 }
 
-	func (srv *Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
+func (srv *Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 
-			resp = &rpc.CheckoutResp{
-				Success: true,
-				StatusUrl: "This is a strategy test.",
-				Message: "Returned from CustomCheckout API",
-			}
+	resp = &rpc.CheckoutResp{
+		Success:   true,
+		StatusUrl: "This is a strategy test.",
+		Message:   "Returned from CustomCheckout API",
+	}
 
 	return
-	}
+}
 
 func (srv *Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 	srv.logs.InfoLogger.Printf(" [SERVICE] Checkout service ran %+v", req)
 
 	statusURL := ""
 
-		// TO HANDLE PAYMENT STATUS RESPONSE (RETURN THE STATUS URL BACK TO THE CLIENT)
-		statusURL, err = stripe.CreateCheckoutSession() 
-		if err != nil {
-			resp = &rpc.CheckoutResp{
-				Success: false,
-				StatusUrl: statusURL,
-			}
-			return
+	// TO HANDLE PAYMENT STATUS RESPONSE (RETURN THE STATUS URL BACK TO THE CLIENT)
+	statusURL, err = stripe.CreateCheckoutSession()
+	if err != nil {
+		resp = &rpc.CheckoutResp{
+			Success:   false,
+			StatusUrl: statusURL,
 		}
-
+		return
+	}
 
 	checkoutSuccess, err := srv.base.CreateNewOrder(req.CheckoutItems)
 	if err != nil {
@@ -61,14 +60,14 @@ func (srv *Service) StripeCheckoutSession(ctx context.Context, req *rpc.Checkout
 		srv.logs.ErrorLogger.Printf(" [SERVICE] RESULT FROM DS : %+v", checkoutSuccess)
 	}
 
-	srv.logs.InfoLogger.Printf(" [SERVICE] CREATE NEW ORDER STATUS : %+v\n",checkoutSuccess)
+	srv.logs.InfoLogger.Printf(" [SERVICE] CREATE NEW ORDER STATUS : %+v\n", checkoutSuccess)
 
 	// USE ENUM AS ERROR CODES
 	resp = &rpc.CheckoutResp{
-		Success: checkoutSuccess,
+		Success:   checkoutSuccess,
 		StatusUrl: statusURL,
-		Message: "",
+		Message:   "",
 	}
 
-	return 
-} 
+	return
+}
