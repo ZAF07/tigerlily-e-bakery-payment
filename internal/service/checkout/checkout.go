@@ -31,8 +31,8 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 
 	resp = &rpc.CheckoutResp{
-		Success:   true,
 		StatusUrl: "This is a strategy test.",
+		Success:   true,
 		Message:   "Returned from CustomCheckout API",
 	}
 
