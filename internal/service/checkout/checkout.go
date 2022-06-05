@@ -2,6 +2,7 @@ package checkout
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
@@ -29,7 +30,7 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 }
 
 func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
-
+	fmt.Println("I RAN")
 	resp = &rpc.CheckoutResp{
 		StatusUrl: "This is a strategy test.",
 		Success:   true,
