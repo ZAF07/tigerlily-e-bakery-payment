@@ -30,11 +30,11 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 }
 
 func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
-	fmt.Println("Send request to Notification Service to fire Email, SMS, notification")
+	fmt.Println("Send request to Notification Service to fire Email, SMS, notification to client and merchant")
 	resp = &rpc.CheckoutResp{
 		StatusUrl: "This is a strategy test.",
 		Success:   true,
-		Message:   "Returned from CustomCheckout API",
+		Message:   "Returned from CustomCheckout API; To send a request to notification service for oder confirmation after creating a new order",
 	}
 
 	return
