@@ -30,7 +30,7 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 }
 
 func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
-	fmt.Println("I RAN")
+	fmt.Println("Send request to Notification Service to fire Email, SMS, notification")
 	resp = &rpc.CheckoutResp{
 		StatusUrl: "This is a strategy test.",
 		Success:   true,
