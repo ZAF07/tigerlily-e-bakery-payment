@@ -31,9 +31,20 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 
 func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 	fmt.Println("Send request to Notification Service to fire Email, SMS, notification to client and merchant")
+	fmt.Printf("THIS IS THE CHECKOUT ITEMS => %+v", req.CheckoutItems)
+
+	checkoutSuccess, err := srv.base.CreateNewOrder(req.CheckoutItems)
+	if err != nil {
+		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
+		srv.logs.ErrorLogger.Printf(" [SERVICE] RESULT FROM DS : %+v", checkoutSuccess)
+	}
+
+	srv.logs.InfoLogger.Printf(" [SERVICE] CREATE NEW ORDER STATUS : %+v\n", checkoutSuccess)
+
+	// USE ENUM AS ERROR CODES
 	resp = &rpc.CheckoutResp{
+		Success:   checkoutSuccess,
 		StatusUrl: "This is a strategy test.",
-		Success:   true,
 		Message:   "Returned from CustomCheckout API; To send a request to notification service for oder confirmation after creating a new order",
 	}
 
