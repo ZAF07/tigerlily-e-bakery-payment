@@ -1,13 +1,13 @@
 package router
 
 import (
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/controller"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rest/controller"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func Router(r *gin.Engine) *gin.Engine {
-	
+
 	// Set CORS config
 	r.Use(cors.New(cors.Config{
 		AllowCredentials: false,
@@ -22,7 +22,7 @@ func Router(r *gin.Engine) *gin.Engine {
 	// Checkout API Endpoint
 	checkoutAPI := controller.NewCheckoutAPI()
 	checkOut := r.Group("checkout")
-	
+
 	{
 		{
 			checkOut.POST("/stripe-checkout-session", checkoutAPI.StripeCheckoutSession)

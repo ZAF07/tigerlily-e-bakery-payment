@@ -13,18 +13,18 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/router"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/env"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rest/router"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/db"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/env"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
 	"github.com/soheilhy/cmux"
 	"google.golang.org/grpc"
 )
 
-	func main() {
+func main() {
 	logs := logger.NewLogger()
 	logs.InfoLogger.Println("Starting up server ...")
 
@@ -46,7 +46,7 @@ import (
 	// If request headers don't specify HTTP, next mux would handle the request
 	httpListener := m.Match(cmux.HTTP1Fast())
 	grpclistener := m.Match(cmux.Any())
-	
+
 	// Run GO routine to run both servers at diff processes at the same time
 	go serveGRPC(grpclistener)
 	go serveHTTP(httpListener)

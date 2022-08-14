@@ -1,21 +1,21 @@
 package checkout
 
 import (
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/models"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/models"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type CheckoutRepo struct {
-	db *gorm.DB
+	db   *gorm.DB
 	logs logger.Logger
 }
 
 func NewCheckoutRepo(DB *gorm.DB) *CheckoutRepo {
-	return&CheckoutRepo{
-		db: DB,
+	return &CheckoutRepo{
+		db:   DB,
 		logs: *logger.NewLogger(),
 	}
 }
@@ -27,11 +27,11 @@ func (repo CheckoutRepo) CreateNewOrder(checkoutItems []*rpc.Checkout) (success 
 		for _, item := range checkoutItems {
 			orderItem := &models.Order{ // Should add price into table
 				DiscountCode: item.DiscountCode,
-				OrderID: item.OrderId,
-				CustomerID: item.CustomerId,
-				SkuID: item.SkuId,
+				OrderID:      item.OrderId,
+				CustomerID:   item.CustomerId,
+				SkuID:        item.SkuId,
 			}
-	
+
 			if err := tx.Debug().Omit("DeletedAt").Create(&orderItem).Error; err != nil {
 				repo.logs.WarnLogger.Printf("[REPO] Error batch creating order items : %+v", err)
 				success = false
@@ -41,6 +41,6 @@ func (repo CheckoutRepo) CreateNewOrder(checkoutItems []*rpc.Checkout) (success 
 		success = true
 		return nil
 	})
-	
+
 	return
 }

@@ -3,8 +3,8 @@ package db
 import (
 	"log"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/env"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/env"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -15,15 +15,15 @@ type Db struct {
 	db *gorm.DB
 }
 
-func NewDB() (*gorm.DB) {
+func NewDB() *gorm.DB {
 	connectDB()
 	return ORM
 }
 
-func connectDB() () {
+func connectDB() {
 
 	logs := logger.NewLogger()
-		db, err := gorm.Open("postgres",  env.GetDBEnv())
+	db, err := gorm.Open("postgres", env.GetDBEnv())
 	if err != nil {
 		logs.ErrorLogger.Printf("Couldn't connect to Database %+v", err)
 		log.Fatalf("Error connectiong to Database : %+v", err)

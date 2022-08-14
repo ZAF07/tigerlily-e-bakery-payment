@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 )
 
 func SetEnv() {
@@ -19,7 +19,7 @@ func SetEnv() {
 	dbName := os.Args[5]
 	dbSSL := os.Args[6]
 	dbPort := os.Args[7]
-	
+
 	// port := strconv.Itoa(dbPort)
 	os.Setenv("serverenv", serverENV)
 	os.Setenv("dbHost", dbHost)
