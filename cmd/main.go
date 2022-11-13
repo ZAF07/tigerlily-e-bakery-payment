@@ -34,6 +34,7 @@ func main() {
 
 	config := config.LoadConfig()
 	port := config.GetApplicationPort()
+
 	// Spin up the main server instance
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
