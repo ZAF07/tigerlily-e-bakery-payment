@@ -15,6 +15,7 @@ import (
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/router"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/env"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
@@ -24,18 +25,20 @@ import (
 	"google.golang.org/grpc"
 )
 
-	func main() {
+func main() {
 	logs := logger.NewLogger()
 	logs.InfoLogger.Println("Starting up server ...")
 
 	// Set ENV vars
 	env.SetEnv()
 
+	config := config.LoadConfig()
+	port := config.GetApplicationPort()
 	// Spin up the main server instance
-	lis, err := net.Listen("tcp", ":8001")
+	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		logs.ErrorLogger.Println("Something went wrong in the server startup")
-		log.Fatalf("Error connecting tcp port 8000")
+		log.Fatalf("Error connecting tcp port %s", port)
 	}
 	logs.InfoLogger.Println("Successfull server init")
 
@@ -46,7 +49,7 @@ import (
 	// If request headers don't specify HTTP, next mux would handle the request
 	httpListener := m.Match(cmux.HTTP1Fast())
 	grpclistener := m.Match(cmux.Any())
-	
+
 	// Run GO routine to run both servers at diff processes at the same time
 	go serveGRPC(grpclistener)
 	go serveHTTP(httpListener)
