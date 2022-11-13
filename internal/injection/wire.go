@@ -8,6 +8,7 @@ import (
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection/providers"
 	"github.com/google/wire"
+	// "github.com/jinzhu/gorm"
 )
 
 func GetGeneralConfig() *config.GeneralConfig {

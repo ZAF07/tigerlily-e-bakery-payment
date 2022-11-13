@@ -31,7 +31,7 @@ func NewCheckoutService(DB *gorm.DB) *Service {
 
 func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (resp *rpc.CheckoutResp, err error) {
 	fmt.Println("Send request to Notification Service to fire Email, SMS, notification to client and merchant")
-	fmt.Printf("THIS IS THE CHECKOUT ITEMS => %+v", req.CheckoutItems)
+	fmt.Printf("THIS IS THE CHECKOUT ITEMS => %+v\n", req.CheckoutItems)
 
 	checkoutSuccess, err := srv.base.CreateNewOrder(req.CheckoutItems)
 	if err != nil {

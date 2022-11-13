@@ -3,7 +3,6 @@ package controller
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
@@ -15,13 +14,13 @@ import (
 )
 
 type CheckoutAPI struct {
-	db *gorm.DB
+	db   *gorm.DB
 	logs logger.Logger
 }
 
 func NewCheckoutAPI() *CheckoutAPI {
 	return &CheckoutAPI{
-		db: db.NewDB(),
+		db:   db.NewDB(),
 		logs: *logger.NewLogger(),
 	}
 }
@@ -33,31 +32,31 @@ func (a CheckoutAPI) StripeCheckoutSession(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		fmt.Printf("error binding req struct : %+v", err)
+		fmt.Printf("error binding req struct : %+v\n", err)
 	}
-	fmt.Printf("HERE : %+v", req.CheckoutItems[0])
+	fmt.Printf("HERE FROM CONTROLLER : %+v\n", req.CheckoutItems[0])
 	ctx := context.Background()
 	service := checkout.NewCheckoutService(a.db)
 
-	// PROPERLY HANDLE ERROR FOR WHEN DB ERROR 
+	// PROPERLY HANDLE ERROR FOR WHEN DB ERROR
 	resp, err := service.CustomCheckout(ctx, &req)
 	if err != nil {
 		a.logs.ErrorLogger.Println("[CONTROLLER] Error getting response")
-		a.logs.InfoLogger.Printf("[CONTROLLER] Status of resp value: %+v\n",resp)
-		log.Fatalf("Error with DB : %+v", err)
+		a.logs.InfoLogger.Printf("[CONTROLLER] Status of resp value: %+v\n", resp)
+		a.logs.ErrorLogger.Printf("[CONTROLLER] Error reason: %+v\n", err)
 		c.JSON(http.StatusInternalServerError,
-		gin.H{
-		"message": "Error checkout",
-		"status": http.StatusInternalServerError,
-		"data": resp,
-	})
-	return
+			gin.H{
+				"message": "Error checkout",
+				"status":  http.StatusInternalServerError,
+				"data":    resp,
+			})
+		return
 	}
 
 	c.JSON(http.StatusOK,
-	gin.H{
-		"message": "Success checkout",
-		"status": http.StatusOK,
-		"data": resp,
-	})
+		gin.H{
+			"message": "Success checkout",
+			"status":  http.StatusOK,
+			"data":    resp,
+		})
 }

@@ -15,9 +15,9 @@ import (
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/router"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/app"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/env"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
@@ -30,10 +30,12 @@ func main() {
 	logs.InfoLogger.Println("Starting up server ...")
 
 	// Set ENV vars
-	env.SetEnv()
+	// env.SetEnv()
 
-	config := config.LoadConfig().GeneralConfig
-	port := config.PaymentDB.Port
+	app.InitApplication()
+	// config := config.LoadConfig().GeneralConfig
+	config := injection.GetGeneralConfig()
+	port := fmt.Sprintf(":%s", config.Port)
 
 	// INIT APPLICATION IN app.go
 
@@ -71,6 +73,8 @@ func serveGRPC(l net.Listener) {
 
 	// Register GRPC stubs (pass the GRPCServer and the initialisation of the service layer)
 	rpc.RegisterCheckoutServiceServer(grpcServer, checkout.NewCheckoutService(db.NewDB()))
+	// 🚨 TODO: Implement DI for Database instance
+	// rpc.RegisterCheckoutServiceServer(grpcServer, checkout.NewCheckoutService(injection.GetPaymentDBInstance()))
 
 	if err := grpcServer.Serve(l); err != nil {
 		log.Fatalf("error running GRPC server %+v", err)

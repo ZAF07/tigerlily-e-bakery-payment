@@ -7,7 +7,8 @@ import (
 
 type ApplicationConfig struct {
 	GeneralConfig GeneralConfig
-	PaymentDB     *sql.DB
+	// PaymentDB     *gorm.DB
+	PaymentDB *sql.DB
 }
 
 type GeneralConfig struct {
@@ -23,6 +24,7 @@ type PaymentDB struct {
 	Port        string `mapstructure:"port" json:"port"`
 	Host        string `mapstructure:"host" json:"host"`
 	User        string `mapstructure:"user" json:"user"`
+	Name        string `mapstructure:"name" json:"name"`
 	Password    string `mapstructure:"password" json:"password"`
 	MaxConn     int    `mapstructure:"max_conns" json:"max_conns"`
 	MaxIdleConn int    `mapstructure:"max_idle_conns" json:"max_idle_conns"`
@@ -54,7 +56,7 @@ func (c *ApplicationConfig) GetApplicationPort() string {
 
 func (d *PaymentDB) GetPostgresDBString() string {
 	if d.Password != "" {
-		return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", d.Host, d.User, d.Password, d.User, d.Port, d.SSL)
+		return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", d.Host, d.User, d.Password, d.Name, d.Port, d.SSL)
 	}
-	return fmt.Sprintf("host=%s user=%s dbname=%s port=%s sslmode=%s", d.Host, d.User, d.User, d.Port, d.SSL)
+	return fmt.Sprintf("host=%s user=%s dbname=%s port=%s sslmode=%s", d.Host, d.User, d.Name, d.Port, d.SSL)
 }
