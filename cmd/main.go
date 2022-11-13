@@ -32,8 +32,10 @@ func main() {
 	// Set ENV vars
 	env.SetEnv()
 
-	config := config.LoadConfig()
-	port := config.GetApplicationPort()
+	config := config.LoadConfig().GeneralConfig
+	port := config.PaymentDB.Port
+
+	// INIT APPLICATION IN app.go
 
 	// Spin up the main server instance
 	lis, err := net.Listen("tcp", port)

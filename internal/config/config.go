@@ -1,9 +1,13 @@
 package config
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+)
 
 type ApplicationConfig struct {
 	GeneralConfig GeneralConfig
+	PaymentDB     *sql.DB
 }
 
 type GeneralConfig struct {
@@ -15,11 +19,13 @@ type GeneralConfig struct {
 }
 
 type PaymentDB struct {
-	SSLDisable string `mapstructure:"ssl" json:"ssl"`
-	Port       string `mapstructure:"port" json:"port"`
-	Host       string `mapstructure:"host" json:"host"`
-	User       string `mapstructure:"user" json:"user"`
-	Password   string `mapstructure:"password" json:"password"`
+	SSL         string `mapstructure:"ssl" json:"ssl"`
+	Port        string `mapstructure:"port" json:"port"`
+	Host        string `mapstructure:"host" json:"host"`
+	User        string `mapstructure:"user" json:"user"`
+	Password    string `mapstructure:"password" json:"password"`
+	MaxConn     int    `mapstructure:"max_conns" json:"max_conns"`
+	MaxIdleConn int    `mapstructure:"max_idle_conns" json:"max_idle_conns"`
 }
 
 type ServerConfig struct {
@@ -44,4 +50,11 @@ func LoadConfig() *ApplicationConfig {
 func (c *ApplicationConfig) GetApplicationPort() string {
 	port := fmt.Sprintf(":%s", c.GeneralConfig.Port)
 	return port
+}
+
+func (d *PaymentDB) GetPostgresDBString() string {
+	if d.Password != "" {
+		return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", d.Host, d.User, d.Password, d.User, d.Port, d.SSL)
+	}
+	return fmt.Sprintf("host=%s user=%s dbname=%s port=%s sslmode=%s", d.Host, d.User, d.User, d.Port, d.SSL)
 }
