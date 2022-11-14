@@ -33,7 +33,7 @@ func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (re
 	fmt.Println("Send request to Notification Service to fire Email, SMS, notification to client and merchant")
 	fmt.Printf("THIS IS THE CHECKOUT ITEMS => %+v\n", req.CheckoutItems)
 
-	err = srv.base.CreateNewOrder(req.CheckoutItems)
+	err = srv.base.CreateNewOrder(ctx, req.CheckoutItems)
 	if err != nil {
 		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
 	}
@@ -65,7 +65,7 @@ func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutR
 		return
 	}
 
-	err = srv.base.CreateNewOrder(req.CheckoutItems)
+	err = srv.base.CreateNewOrder(ctx, req.CheckoutItems)
 	if err != nil {
 		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
 	}

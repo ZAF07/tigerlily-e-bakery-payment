@@ -1,6 +1,7 @@
 package checkout
 
 import (
+	"context"
 	"log"
 	"time"
 
@@ -25,12 +26,17 @@ func NewCheckoutRepo(DB *gorm.DB) *CheckoutRepo {
 	}
 }
 
-func (repo CheckoutRepo) CreateNewOrder(checkoutItems []*rpc.Checkout) error {
+func (repo CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*rpc.Checkout) error {
 
-	//  DI
-	db := injection.GetPaymentDBInstance()
+	// Get a connection from the pool
+	db, err := injection.GetPaymentDBInstance().Conn(ctx)
+	if err != nil {
+		log.Fatalf("Error getting connection from DB pool: %+v", err)
+		return err
+	}
 
-	tx, err := db.Begin()
+	//  Begin TX with default options, (💡 Might want to check out the options)
+	tx, err := db.BeginTx(ctx, nil)
 	if err != nil {
 		tx.Rollback()
 		log.Printf("database transaction error : %+v\n", err)
