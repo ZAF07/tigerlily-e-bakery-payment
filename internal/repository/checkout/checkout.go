@@ -25,31 +25,31 @@ func NewCheckoutRepo(DB *gorm.DB) *CheckoutRepo {
 	}
 }
 
-func (repo CheckoutRepo) CreateNewOrder(checkoutItems []*rpc.Checkout) (success bool, err error) {
+func (repo CheckoutRepo) CreateNewOrder(checkoutItems []*rpc.Checkout) error {
 
 	//  DI
 	db := injection.GetPaymentDBInstance()
 
-	log.Printf("GOT IN REPO : %+v", checkoutItems)
-
-	tx, terr := db.Begin()
-	if terr != nil {
+	tx, err := db.Begin()
+	if err != nil {
+		tx.Rollback()
 		log.Printf("database transaction error : %+v\n", err)
-		return false, terr
+		return err
 	}
 	for _, v := range checkoutItems {
 		now := time.Now()
-		_, e := tx.Exec("INSERT INTO orders (order_id, sku_id, customer_id, discount_code, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)", v.OrderId, v.SkuId, v.CustomerId, v.DiscountCode, now, now)
-		if e != nil {
-			log.Printf("EXEC ERROR --> %+v", e)
+		_, eErr := tx.Exec("INSERT INTO orders (order_id, sku_id, customer_id, discount_code, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)", v.OrderId, v.SkuId, v.CustomerId, v.DiscountCode, now, now)
+		if eErr != nil {
+			log.Printf("EXEC ERROR --> %+v", eErr)
 			tx.Rollback()
-			return false, e
+			return eErr
 		}
 	}
 
-	if err = tx.Commit(); err != nil {
-		log.Printf("error committing transaction : %+v\n", err)
-		return false, err
+	if cErr := tx.Commit(); cErr != nil {
+		tx.Rollback()
+		log.Printf("error committing transaction : %+v\n", cErr)
+		return cErr
 	}
 
 	// RUN A TRANSACTION FOR CREATION, IF FAIL, WILL FALLBACK
@@ -72,5 +72,5 @@ func (repo CheckoutRepo) CreateNewOrder(checkoutItems []*rpc.Checkout) (success 
 	// 	return nil
 	// })
 
-	return
+	return err
 }

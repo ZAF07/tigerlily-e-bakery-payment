@@ -3,17 +3,21 @@ package config
 import (
 	"database/sql"
 	"fmt"
+
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 )
 
 type ApplicationConfig struct {
 	GeneralConfig GeneralConfig
 	// PaymentDB     *gorm.DB
-	PaymentDB *sql.DB
+	PaymentDB     *sql.DB
+	DefaultLogger *logger.Logger
 }
 
 type GeneralConfig struct {
-	Port          string
-	Environment   string
+	Port          string        `mapstructure:"port" json:"port"`
+	Environment   string        `mapstructure:"environment" json:"environment"`
+	Logger        string        `mapstructure:"logger" json:"logger"`
 	Server        ServerConfig  `mapstructure:"server_config" json:"server_config"`
 	PaymentDB     PaymentDB     `mapstructure:"payment_db" json:"payment_db"`
 	StripeService StripeService `mapstructure:"stripe_service" json:"stripe_service"`

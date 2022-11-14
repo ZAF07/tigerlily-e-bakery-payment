@@ -33,6 +33,7 @@ func main() {
 	// env.SetEnv()
 
 	app.InitApplication()
+
 	// config := config.LoadConfig().GeneralConfig
 	config := injection.GetGeneralConfig()
 	port := fmt.Sprintf(":%s", config.Port)
