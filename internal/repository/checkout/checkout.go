@@ -2,24 +2,23 @@ package checkout
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	"time"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	"github.com/jinzhu/gorm"
 
 	// _ "github.com/lib/pq"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type CheckoutRepo struct {
-	db   *gorm.DB
+	db   *sql.DB
 	logs logger.Logger
 }
 
-func NewCheckoutRepo(DB *gorm.DB) *CheckoutRepo {
+func NewCheckoutRepo(DB *sql.DB) *CheckoutRepo {
 	return &CheckoutRepo{
 		db:   DB,
 		logs: *logger.NewLogger(),
@@ -29,7 +28,8 @@ func NewCheckoutRepo(DB *gorm.DB) *CheckoutRepo {
 func (repo CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*rpc.Checkout) error {
 
 	// Get a connection from the pool
-	db, err := injection.GetPaymentDBInstance().Conn(ctx)
+	// db, err := injection.GetPaymentDBInstance().Conn(ctx)
+	db, err := repo.db.Conn(ctx)
 	if err != nil {
 		log.Fatalf("Error getting connection from DB pool: %+v", err)
 		return err

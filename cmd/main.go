@@ -12,17 +12,18 @@ import (
 	"net"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/router"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/app"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
 	"github.com/soheilhy/cmux"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
 )
 
 func main() {
@@ -70,12 +71,20 @@ func main() {
 
 // GRPC Server initialisation
 func serveGRPC(l net.Listener) {
-	grpcServer := grpc.NewServer()
+
+	// IMPLEMENT AND TEST THE KEEPALIVE FUNCTIONALITY
+	k := keepalive.EnforcementPolicy{
+		MinTime:             time.Duration(3 * time.Second),
+		PermitWithoutStream: true,
+	}
+
+	kk := grpc.KeepaliveEnforcementPolicy(k)
+	grpcServer := grpc.NewServer(kk)
 
 	// Register GRPC stubs (pass the GRPCServer and the initialisation of the service layer)
-	rpc.RegisterCheckoutServiceServer(grpcServer, checkout.NewCheckoutService(db.NewDB()))
+	// rpc.RegisterCheckoutServiceServer(grpcServer, checkout.NewCheckoutService(db.NewDB()))
 	// 🚨 TODO: Implement DI for Database instance
-	// rpc.RegisterCheckoutServiceServer(grpcServer, checkout.NewCheckoutService(injection.GetPaymentDBInstance()))
+	rpc.RegisterCheckoutServiceServer(grpcServer, checkout.NewCheckoutService(injection.GetPaymentDBInstance()))
 
 	if err := grpcServer.Serve(l); err != nil {
 		log.Fatalf("error running GRPC server %+v", err)

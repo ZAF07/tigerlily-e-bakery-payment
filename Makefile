@@ -2,4 +2,5 @@ gen_wire:
 	wire ./internal/injection
 
 start:
-	go run cmd/main.go
+	@echo "~~~~~~ Starting payment server ~~~~~~"
+	@go run cmd/main.go

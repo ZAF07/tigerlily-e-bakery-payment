@@ -2,25 +2,26 @@ package controller
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"net/http"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 )
 
 type CheckoutAPI struct {
-	db   *gorm.DB
+	db   *sql.DB
 	logs logger.Logger
 }
 
 func NewCheckoutAPI() *CheckoutAPI {
 	return &CheckoutAPI{
-		db:   db.NewDB(),
+		// db:   db.NewDB(),
+		db:   injection.GetPaymentDBInstance(),
 		logs: *logger.NewLogger(),
 	}
 }

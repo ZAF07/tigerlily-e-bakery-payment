@@ -2,18 +2,19 @@ package checkout
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/stripe"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type Service struct {
-	db   *gorm.DB
+	// db   *gorm.DB
+	db   *sql.DB
 	base checkout.CheckoutRepo
 	logs logger.Logger
 	rpc.UnimplementedCheckoutServiceServer
@@ -21,7 +22,7 @@ type Service struct {
 
 var _ rpc.CheckoutServiceServer = (*Service)(nil)
 
-func NewCheckoutService(DB *gorm.DB) *Service {
+func NewCheckoutService(DB *sql.DB) *Service {
 	return &Service{
 		db:   DB,
 		base: *checkout.NewCheckoutRepo(DB),
