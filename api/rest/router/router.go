@@ -7,7 +7,7 @@ import (
 )
 
 func Router(r *gin.Engine) *gin.Engine {
-	
+
 	// Set CORS config
 	r.Use(cors.New(cors.Config{
 		AllowCredentials: false,
@@ -22,11 +22,9 @@ func Router(r *gin.Engine) *gin.Engine {
 	// Checkout API Endpoint
 	checkoutAPI := controller.NewCheckoutAPI()
 	checkOut := r.Group("checkout")
-	
+
 	{
-		{
-			checkOut.POST("/stripe-checkout-session", checkoutAPI.StripeCheckoutSession)
-		}
+		checkOut.POST("/stripe-checkout-session", checkoutAPI.StripeCheckoutSession)
 	}
 
 	return r
