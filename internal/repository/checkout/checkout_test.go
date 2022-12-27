@@ -7,15 +7,14 @@ import (
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/models"
 )
 
-
+// TODO: Complete test case
 func TestCreate(t *testing.T) {
 	orderItems := &models.Order{
-		OrderID: "orderId",
-		SkuID: "skuid",
-		CustomerID: "customerId",
+		OrderID:      "orderId",
+		SkuID:        "skuid",
+		CustomerID:   "customerId",
 		DiscountCode: "discountcode",
 	}
 	db := db.NewDB()
 	db.Create(orderItems)
-
 }
