@@ -14,6 +14,7 @@ func InitApplication() {
 }
 
 func initDB(appConfig *config.ApplicationConfig) {
+	// 💡 TODO: Check config value for which DB instance to initialise
 	appConfig.PaymentDB = db.InitPostgresDB()
 }
 
