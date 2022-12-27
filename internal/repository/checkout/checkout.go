@@ -13,6 +13,8 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
+// 💡 TODO: Repository should implement an interface so that we can use the same method call for diff DB implementation
+
 type CheckoutRepo struct {
 	db   *sql.DB
 	logs logger.Logger
