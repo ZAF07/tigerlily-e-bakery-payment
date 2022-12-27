@@ -57,6 +57,7 @@ func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutR
 	statusURL := ""
 
 	// TO HANDLE PAYMENT STATUS RESPONSE (RETURN THE STATUS URL BACK TO THE CLIENT)
+	//  TODO : Send amount to charge and item name
 	statusURL, err = stripe.CreateCheckoutSession()
 	if err != nil {
 		resp = &rpc.CheckoutResp{
