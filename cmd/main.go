@@ -93,10 +93,13 @@ func serveGRPC(l net.Listener) {
 
 // HTTP Server initialisation (using gin)
 func serveHTTP(l net.Listener) {
+	config := injection.GetGeneralConfig()
 	h := gin.Default()
 	router.Router(h)
 	s := &http.Server{
-		Handler: h,
+		Handler:      h,
+		ReadTimeout:  time.Duration(config.ServerConfig.ReadTimeout),
+		WriteTimeout: time.Duration(config.ServerConfig.WriteTimeout),
 	}
 	if err := s.Serve(l); err != cmux.ErrListenerClosed {
 		log.Fatalf("error serving HTTP : %+v", err)

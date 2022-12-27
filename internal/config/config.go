@@ -18,7 +18,7 @@ type GeneralConfig struct {
 	Port          string        `mapstructure:"port" json:"port"`
 	Environment   string        `mapstructure:"environment" json:"environment"`
 	Logger        string        `mapstructure:"logger" json:"logger"`
-	Server        ServerConfig  `mapstructure:"server_config" json:"server_config"`
+	ServerConfig  ServerConfig  `mapstructure:"server_config" json:"server_config"`
 	PaymentDB     PaymentDB     `mapstructure:"payment_db" json:"payment_db"`
 	StripeService StripeService `mapstructure:"stripe_service" json:"stripe_service"`
 }
@@ -39,6 +39,7 @@ type ServerConfig struct {
 	WriteTimeout int      `mapstructure:"write_timeout" json:"write_timeout"`
 	AllowOrigins []string `mapstructure:"allow_origins" json:"allow_origins"`
 	AllowMethods []string `mapstructure:"allow_methods" json:"allow_methods"`
+	AllowHeaders []string `mapstructure:"allow_headers" json:"allow_headers"`
 }
 
 type StripeService struct {
