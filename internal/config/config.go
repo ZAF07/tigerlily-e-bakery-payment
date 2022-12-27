@@ -1,16 +1,19 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 )
+
+// 💡 TODO: DB field should be an interface with all possible DB methods so that we can implement diff DB instances upon start-up
 
 type ApplicationConfig struct {
 	GeneralConfig GeneralConfig
 	// PaymentDB     *gorm.DB
-	PaymentDB     *sql.DB
+	// PaymentDB     *sql.DB
+	PaymentDB     repo.CheckoutDBInterface
 	DefaultLogger *logger.Logger
 }
 
@@ -18,6 +21,7 @@ type GeneralConfig struct {
 	Port          string        `mapstructure:"port" json:"port"`
 	Environment   string        `mapstructure:"environment" json:"environment"`
 	Logger        string        `mapstructure:"logger" json:"logger"`
+	DBType        string        `mapstructure:"db_type" json:"db_type"`
 	ServerConfig  ServerConfig  `mapstructure:"server_config" json:"server_config"`
 	PaymentDB     PaymentDB     `mapstructure:"payment_db" json:"payment_db"`
 	StripeService StripeService `mapstructure:"stripe_service" json:"stripe_service"`

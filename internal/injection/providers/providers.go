@@ -1,16 +1,19 @@
 package providers
 
 import (
-	"database/sql"
-
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
+	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 )
 
 func GeneralConfigProvider() *config.GeneralConfig {
 	return &config.LoadConfig().GeneralConfig
 }
 
-func PaymentDBInstanceProvider() *sql.DB {
+// func PaymentDBInstanceProvider() *sql.DB {
+// 	return config.LoadConfig().PaymentDB
+// }
+
+func PaymentDBInstanceProviderInterface() repo.CheckoutDBInterface {
 	return config.LoadConfig().PaymentDB
 }
 

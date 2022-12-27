@@ -7,9 +7,9 @@
 package injection
 
 import (
-	"database/sql"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection/providers"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 )
 
 // Injectors from wire.go:
@@ -19,9 +19,9 @@ func GetGeneralConfig() *config.GeneralConfig {
 	return generalConfig
 }
 
-func GetPaymentDBInstance() *sql.DB {
-	db := providers.PaymentDBInstanceProvider()
-	return db
+func GetPaymentDBInstance() checkout.CheckoutDBInterface {
+	checkoutDBInterface := providers.PaymentDBInstanceProviderInterface()
+	return checkoutDBInterface
 }
 
 func GetStripeServiceConfig() *config.StripeService {

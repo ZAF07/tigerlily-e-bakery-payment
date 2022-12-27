@@ -2,7 +2,6 @@ package checkout
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
@@ -16,18 +15,20 @@ import (
 
 type Service struct {
 	// db   *gorm.DB
-	db   *sql.DB
-	base checkout.CheckoutRepo
+	// db   *sql.DB
+	db checkout.CheckoutDBInterface
+	// base checkout.CheckoutRepo
 	logs logger.Logger
 	rpc.UnimplementedCheckoutServiceServer
 }
 
 var _ rpc.CheckoutServiceServer = (*Service)(nil)
 
-func NewCheckoutService(DB *sql.DB) *Service {
+func NewCheckoutService(DB checkout.CheckoutDBInterface) *Service {
 	return &Service{
-		db:   DB,
-		base: *checkout.NewCheckoutRepo(DB),
+		db: DB,
+		// base: *checkout.NewCheckoutRepo(DB),
+		// base: DB,
 		logs: *logger.NewLogger(),
 	}
 }
@@ -36,7 +37,7 @@ func (srv Service) CustomCheckout(ctx context.Context, req *rpc.CheckoutReq) (re
 	fmt.Println("Send request to Notification Service to fire Email, SMS, notification to client and merchant")
 	fmt.Printf("THIS IS THE CHECKOUT ITEMS => %+v\n", req.CheckoutItems)
 
-	err = srv.base.CreateNewOrder(ctx, req.CheckoutItems)
+	err = srv.db.CreateNewOrder(ctx, req.CheckoutItems)
 	if err != nil {
 		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
 	}
@@ -69,7 +70,7 @@ func (srv Service) StripeCheckoutSession(ctx context.Context, req *rpc.CheckoutR
 		return
 	}
 
-	err = srv.base.CreateNewOrder(ctx, req.CheckoutItems)
+	err = srv.db.CreateNewOrder(ctx, req.CheckoutItems)
 	if err != nil {
 		srv.logs.ErrorLogger.Printf("[SERVICE] Error processing database transaction: %+v\n", err)
 	}

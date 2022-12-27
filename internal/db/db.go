@@ -8,6 +8,7 @@ import (
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	repos "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -41,7 +42,8 @@ func connectDB() {
 }
 
 // LATEST IMPLEMENTATION
-func InitPostgresDB() *sql.DB {
+// func InitPostgresDB() *sql.DB {
+func InitPostgresDB() repos.CheckoutDBInterface {
 	config := injection.GetGeneralConfig().PaymentDB
 	sourceName := config.GetPostgresDBString()
 	fmt.Println("DATABASE NAME : ---> ", sourceName)
@@ -54,5 +56,6 @@ func InitPostgresDB() *sql.DB {
 	// Calling the DB() function on the *gorm.DB instance returns the underlying *sql.DB instance
 	db.SetMaxOpenConns(config.MaxConn)
 	db.SetConnMaxIdleTime(time.Duration(config.MaxIdleConn))
-	return db
+	d := repos.NewCheckoutRepo(db)
+	return d
 }

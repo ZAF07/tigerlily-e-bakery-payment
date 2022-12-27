@@ -20,14 +20,14 @@ type CheckoutRepo struct {
 	logs logger.Logger
 }
 
-func NewCheckoutRepo(DB *sql.DB) *CheckoutRepo {
+func NewCheckoutRepo(DB *sql.DB) CheckoutDBInterface {
 	return &CheckoutRepo{
 		db:   DB,
 		logs: *logger.NewLogger(),
 	}
 }
 
-func (repo CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*rpc.Checkout) error {
+func (repo *CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*rpc.Checkout) error {
 
 	// Get a connection from the pool
 	// db, err := injection.GetPaymentDBInstance().Conn(ctx)

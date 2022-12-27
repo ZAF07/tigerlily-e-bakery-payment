@@ -2,19 +2,21 @@ package controller
 
 import (
 	"context"
-	"database/sql"
+	// "database/sql"
 	"fmt"
 	"net/http"
 
 	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
 )
 
 type CheckoutAPI struct {
-	db   *sql.DB
+	// db   *sql.DB
+	db   repo.CheckoutDBInterface
 	logs logger.Logger
 }
 

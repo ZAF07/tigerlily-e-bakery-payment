@@ -14,8 +14,13 @@ func InitApplication() {
 }
 
 func initDB(appConfig *config.ApplicationConfig) {
-	// 💡 TODO: Check config value for which DB instance to initialise
-	appConfig.PaymentDB = db.InitPostgresDB()
+
+	switch appConfig.GeneralConfig.DBType {
+	case constants.POSTGRES:
+		appConfig.PaymentDB = db.InitPostgresDB()
+	default:
+		db.NewDB()
+	}
 }
 
 func initLogger(appConfig *config.ApplicationConfig) {
