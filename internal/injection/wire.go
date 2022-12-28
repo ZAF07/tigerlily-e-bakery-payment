@@ -7,6 +7,7 @@ import (
 	// "database/sql"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection/providers"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 	"github.com/google/wire"
 	// "github.com/jinzhu/gorm"
@@ -15,6 +16,16 @@ import (
 func GetGeneralConfig() *config.GeneralConfig {
 	wire.Build(providers.GeneralConfigProvider)
 	return &config.GeneralConfig{}
+}
+
+func GetApplicationConfig() *config.ApplicationConfig {
+	wire.Build(providers.ApplicationConfigProvider)
+	return &config.ApplicationConfig{}
+}
+
+func GetLogger() *logger.Logger {
+	wire.Build(providers.LoggerProvider)
+	return config.LoadConfig().DefaultLogger
 }
 
 // func GetPaymentDBInstance() *sql.DB {

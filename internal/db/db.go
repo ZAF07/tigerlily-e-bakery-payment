@@ -44,18 +44,25 @@ func connectDB() {
 // LATEST IMPLEMENTATION
 // func InitPostgresDB() *sql.DB {
 func InitPostgresDB() repos.CheckoutDBInterface {
+	logger := injection.GetApplicationConfig().DefaultLogger
 	config := injection.GetGeneralConfig().PaymentDB
 	sourceName := config.GetPostgresDBString()
 	fmt.Println("DATABASE NAME : ---> ", sourceName)
 
 	db, err := sql.Open("postgres", sourceName)
 	if err != nil {
-		log.Fatalf("error connecting to database : %+v\n", err)
+		logger.ErrorLogger.Printf("error connection to database : %+v\n", err)
 	}
 
 	// Calling the DB() function on the *gorm.DB instance returns the underlying *sql.DB instance
 	db.SetMaxOpenConns(config.MaxConn)
 	db.SetConnMaxIdleTime(time.Duration(config.MaxIdleConn))
 	d := repos.NewCheckoutRepo(db)
+
+	if pingErr := d.Ping(); pingErr != nil {
+		logger.ErrorLogger.Printf("database ping error : %+v\n", pingErr)
+	}
+	// logger.InfoLogger.Println("database connected ! 🎇")
+	logger.ErrorLogger.Println("database connected")
 	return d
 }

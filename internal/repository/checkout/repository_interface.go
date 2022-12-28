@@ -8,4 +8,5 @@ import (
 
 type CheckoutDBInterface interface {
 	CreateNewOrder(ctx context.Context, checkoutItems []*rpc.Checkout) error
+	Ping() error
 }

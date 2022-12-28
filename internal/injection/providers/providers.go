@@ -2,8 +2,17 @@ package providers
 
 import (
 	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
+	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
 	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
 )
+
+func ApplicationConfigProvider() *config.ApplicationConfig {
+	return config.LoadConfig()
+}
+
+func LoggerProvider() *logger.Logger {
+	return config.LoadConfig().DefaultLogger
+}
 
 func GeneralConfigProvider() *config.GeneralConfig {
 	return &config.LoadConfig().GeneralConfig

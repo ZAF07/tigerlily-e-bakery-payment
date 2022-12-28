@@ -27,6 +27,14 @@ func NewCheckoutRepo(DB *sql.DB) CheckoutDBInterface {
 	}
 }
 
+func (repo *CheckoutRepo) Ping() (err error) {
+
+	if err := repo.db.Ping(); err != nil {
+		repo.logs.ErrorLogger.Printf("database ping error : %+v", err)
+	}
+	return err
+}
+
 func (repo *CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*rpc.Checkout) error {
 
 	// Get a connection from the pool

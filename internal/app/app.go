@@ -9,8 +9,8 @@ import (
 
 func InitApplication() {
 	appConfig := config.LoadConfig()
-	initDB(appConfig)
 	initLogger(appConfig)
+	initDB(appConfig)
 }
 
 func initDB(appConfig *config.ApplicationConfig) {
