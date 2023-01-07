@@ -41,6 +41,7 @@ func (repo *CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*r
 	// db, err := injection.GetPaymentDBInstance().Conn(ctx)
 	db, err := repo.db.Conn(ctx)
 	if err != nil {
+		repo.logs.ErrorLogger.Printf("Error getting connection from DB pool: %+v", err)
 		log.Fatalf("Error getting connection from DB pool: %+v", err)
 		return err
 	}
@@ -49,13 +50,15 @@ func (repo *CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*r
 	tx, err := db.BeginTx(ctx, nil)
 	if err != nil {
 		tx.Rollback()
-		log.Printf("database transaction error : %+v\n", err)
+		repo.logs.ErrorLogger.Printf("database begin transaction error: %+v", err)
+		log.Printf("database begin transaction error : %+v\n", err)
 		return err
 	}
 	for _, v := range checkoutItems {
 		now := time.Now()
 		_, eErr := tx.Exec("INSERT INTO orders (order_id, sku_id, customer_id, discount_code, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)", v.OrderId, v.SkuId, v.CustomerId, v.DiscountCode, now, now)
 		if eErr != nil {
+			repo.logs.ErrorLogger.Printf("database exec error : %+v", eErr)
 			log.Printf("EXEC ERROR --> %+v", eErr)
 			tx.Rollback()
 			return eErr
@@ -64,6 +67,7 @@ func (repo *CheckoutRepo) CreateNewOrder(ctx context.Context, checkoutItems []*r
 
 	if cErr := tx.Commit(); cErr != nil {
 		tx.Rollback()
+		repo.logs.ErrorLogger.Printf("error commiting transaction : %+v", cErr)
 		log.Printf("error committing transaction : %+v\n", cErr)
 		return cErr
 	}
