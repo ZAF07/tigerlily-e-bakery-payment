@@ -11,7 +11,7 @@ func SetEnv() {
 
 	logs := logger.NewLogger()
 
-	logs.InfoLogger.Println("Setting ENV ... ")
+	logs.InfoLogger.Printf("Setting ENV ...:  %+v", os.Args)
 	serverENV := os.Args[1]
 	dbHost := os.Args[2]
 	dbUser := os.Args[3]
@@ -53,7 +53,7 @@ func GetDBEnv() (dbString string) {
 	default:
 		logs.InfoLogger.Println("RUNNING ON DEVELOPMENT MODE")
 		dbString = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", host, user, password, dbname, port, sslMode)
-		fmt.Println("PAYMENT DB STRING === ", dbString)
+		logs.InfoLogger.Println("PAYMENT DB STRING === ", dbString)
 	}
 	return
 }
