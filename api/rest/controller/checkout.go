@@ -14,6 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// TODO: Refactor service to be a field in the controller struct. Expose interface to define what the service can do and inject it into the controller field upon start up
 type CheckoutAPI struct {
 	// db   *sql.DB
 	db   repo.CheckoutDBInterface
