@@ -14,7 +14,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// TODO: Refactor service to be a field in the controller struct. Expose interface to define what the service can do and inject it into the controller field upon start up
+// TODO: 💡 Refactor service to be a field in the controller struct. Expose interface to define what the service can do and inject it into the controller field upon start up
 type CheckoutAPI struct {
 	db   *gorm.DB
 	logs logger.Logger
