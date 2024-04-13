@@ -2,27 +2,29 @@ package controller
 
 import (
 	"context"
-	"fmt"
 	"log"
+
+	// "database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
-	"github.com/Tiger-Coders/tigerlily-payment/internal/db"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection"
 	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	repo "github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
 	"github.com/Tiger-Coders/tigerlily-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 )
 
 // TODO: 💡 Refactor service to be a field in the controller struct. Expose interface to define what the service can do and inject it into the controller field upon start up
 type CheckoutAPI struct {
-	db   *gorm.DB
+	db   repo.CheckoutDBInterface
 	logs logger.Logger
 }
 
 func NewCheckoutAPI() *CheckoutAPI {
 	return &CheckoutAPI{
-		db:   db.NewDB(),
+		db:   injection.GetPaymentDBInstance(),
 		logs: *logger.NewLogger(),
 	}
 }
@@ -34,9 +36,9 @@ func (a CheckoutAPI) StripeCheckoutSession(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		fmt.Printf("error binding req struct : %+v", err)
+		fmt.Printf("error binding req struct : %+v\n", err)
 	}
-	fmt.Printf("HERE : %+v", req.CheckoutItems[0])
+	fmt.Printf("HERE FROM CONTROLLER : %+v\n", req.CheckoutItems[0])
 	ctx := context.Background()
 	service := checkout.NewCheckoutService(a.db)
 
