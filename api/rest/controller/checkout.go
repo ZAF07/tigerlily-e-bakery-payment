@@ -22,6 +22,7 @@ type CheckoutAPI struct {
 	logs logger.Logger
 }
 
+// TODO: Should return an interface. This allows easier testing and polymorphism
 func NewCheckoutAPI() *CheckoutAPI {
 	return &CheckoutAPI{
 		db:   injection.GetPaymentDBInstance(),
