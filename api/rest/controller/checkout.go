@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	repo "github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
 )
 

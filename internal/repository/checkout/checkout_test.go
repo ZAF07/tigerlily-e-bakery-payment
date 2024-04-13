@@ -3,8 +3,8 @@ package checkout_test
 import (
 	"testing"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/models"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/db"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/models"
 )
 
 // TODO: Complete test case

@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 
 	// _ "github.com/lib/pq"
 	_ "github.com/jinzhu/gorm/dialects/postgres"

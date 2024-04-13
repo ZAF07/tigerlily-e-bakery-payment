@@ -1,4 +1,4 @@
-module github.com/ZAF07/tigerlily-e-bakery-payment
+module github.com/Tiger-Coders/tigerlily-payment
 
 go 1.17
 

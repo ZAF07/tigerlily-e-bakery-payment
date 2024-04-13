@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rest/controller"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rest/controller"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )

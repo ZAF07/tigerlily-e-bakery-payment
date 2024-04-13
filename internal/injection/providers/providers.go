@@ -1,9 +1,9 @@
 package providers
 
 import (
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/config"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	repo "github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
 )
 
 func ApplicationConfigProvider() *config.ApplicationConfig {

@@ -1,10 +1,10 @@
 package app
 
 import (
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/constants"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/config"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/db"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/constants"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 )
 
 func InitApplication() {

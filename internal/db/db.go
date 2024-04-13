@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	repos "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	repos "github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
