@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 )
 
 func SetEnv() {
 
 	logs := logger.NewLogger()
 
-	logs.InfoLogger.Println("Setting ENV ... ")
+	logs.InfoLogger.Printf("Setting ENV ...:  %+v", os.Args)
 	serverENV := os.Args[1]
 	dbHost := os.Args[2]
 	dbUser := os.Args[3]
@@ -19,7 +19,8 @@ func SetEnv() {
 	dbName := os.Args[5]
 	dbSSL := os.Args[6]
 	dbPort := os.Args[7]
-	
+
+	logs.InfoLogger.Println("DB STRING : ", dbHost, dbUser, dbPassword, dbName, dbPort)
 	// port := strconv.Itoa(dbPort)
 	os.Setenv("serverenv", serverENV)
 	os.Setenv("dbHost", dbHost)
@@ -51,7 +52,8 @@ func GetDBEnv() (dbString string) {
 		return
 	default:
 		logs.InfoLogger.Println("RUNNING ON DEVELOPMENT MODE")
-		dbString = fmt.Sprintf("host=%s user=%s dbname=%s port=%s sslmode=%s", host, user, dbname, port, sslMode)
+		dbString = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", host, user, password, dbname, port, sslMode)
+		logs.InfoLogger.Println("PAYMENT DB STRING === ", dbString)
 	}
 	return
 }

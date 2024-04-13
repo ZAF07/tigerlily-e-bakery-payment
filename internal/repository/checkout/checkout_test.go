@@ -1,20 +1,23 @@
 package checkout_test
 
 import (
+	"context"
 	"testing"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/db"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/models"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/db"
 )
 
-// TODO: Complete test case
 func TestCreate(t *testing.T) {
-	orderItems := &models.Order{
-		OrderID:      "orderId",
-		SkuID:        "skuid",
-		CustomerID:   "customerId",
+	ctx := context.Background()
+	orderItem := &rpc.Checkout{
+		OrderId:      "orderId",
+		SkuId:        "skuid",
+		CustomerId:   "customerId",
 		DiscountCode: "discountcode",
 	}
-	db := db.NewDB()
-	db.Create(orderItems)
+
+	orderItems := []*rpc.Checkout{orderItem}
+	db := db.InitPostgresDB()
+	db.CreateNewOrder(ctx, orderItems)
 }

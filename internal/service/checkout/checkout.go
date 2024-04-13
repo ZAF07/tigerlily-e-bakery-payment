@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/stripe"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/stripe"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 

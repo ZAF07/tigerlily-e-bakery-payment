@@ -2,27 +2,28 @@ package controller
 
 import (
 	"context"
+	"log"
+
 	// "database/sql"
 	"fmt"
 	"net/http"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/service/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	repo "github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/service/checkout"
 	"github.com/gin-gonic/gin"
 )
 
+// TODO: 💡 Refactor service to be a field in the controller struct. Expose interface to define what the service can do and inject it into the controller field upon start up
 type CheckoutAPI struct {
-	// db   *sql.DB
 	db   repo.CheckoutDBInterface
 	logs logger.Logger
 }
 
 func NewCheckoutAPI() *CheckoutAPI {
 	return &CheckoutAPI{
-		// db:   db.NewDB(),
 		db:   injection.GetPaymentDBInstance(),
 		logs: *logger.NewLogger(),
 	}
@@ -46,7 +47,7 @@ func (a CheckoutAPI) StripeCheckoutSession(c *gin.Context) {
 	if err != nil {
 		a.logs.ErrorLogger.Println("[CONTROLLER] Error getting response")
 		a.logs.InfoLogger.Printf("[CONTROLLER] Status of resp value: %+v\n", resp)
-		a.logs.ErrorLogger.Printf("[CONTROLLER] Error reason: %+v\n", err)
+		log.Fatalf("Error with DB : %+v", err)
 		c.JSON(http.StatusInternalServerError,
 			gin.H{
 				"message": "Error checkout",

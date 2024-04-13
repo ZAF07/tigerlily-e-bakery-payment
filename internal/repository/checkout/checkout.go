@@ -6,10 +6,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/api/rpc"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-
-	// _ "github.com/lib/pq"
+	"github.com/Tiger-Coders/tigerlily-payment/api/rpc"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -20,7 +18,7 @@ type CheckoutRepo struct {
 	logs logger.Logger
 }
 
-func NewCheckoutRepo(DB *sql.DB) CheckoutDBInterface {
+func NewCheckoutRepo(DB *sql.DB) *CheckoutRepo {
 	return &CheckoutRepo{
 		db:   DB,
 		logs: *logger.NewLogger(),

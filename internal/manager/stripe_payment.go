@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection"
 	stripe "github.com/stripe/stripe-go/v72"
 	"github.com/stripe/stripe-go/v72/checkout/session"
 )

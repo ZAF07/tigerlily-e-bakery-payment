@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	repo "github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	repo "github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
 )
 
 // 💡 TODO: DB field should be an interface with all possible DB methods so that we can implement diff DB instances upon start-up

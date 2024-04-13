@@ -7,10 +7,10 @@
 package injection
 
 import (
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/config"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/injection/providers"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/pkg/logger"
-	"github.com/ZAF07/tigerlily-e-bakery-payment/internal/repository/checkout"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/config"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/injection/providers"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/pkg/logger"
+	"github.com/Tiger-Coders/tigerlily-payment/internal/repository/checkout"
 )
 
 // Injectors from wire.go:
