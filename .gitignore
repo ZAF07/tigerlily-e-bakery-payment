@@ -15,8 +15,4 @@
 # vendor/
 
 logs.txt
-<<<<<<< HEAD
 config.yml
-=======
-air-tmp
->>>>>>> b26a2d0 (added to gitignore)
