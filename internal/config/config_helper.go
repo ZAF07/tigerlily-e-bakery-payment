@@ -2,6 +2,7 @@ package config
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"sync"
 
@@ -40,7 +41,9 @@ func parseAndWatchConfigFile(filepath string) *ApplicationConfig {
 
 	v := viper.New()
 	v.SetConfigFile(filepath)
-	v.ReadInConfig()
+	if err := v.ReadInConfig(); err != nil {
+		fmt.Println("ERROR READING CONFIG --> ", err)
+	}
 	unmarshalConfig(generalConfig, v)
 
 	v.WatchConfig()

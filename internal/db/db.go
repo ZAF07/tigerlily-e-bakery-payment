@@ -47,7 +47,7 @@ func InitPostgresDB() repos.CheckoutDBInterface {
 	logger := injection.GetApplicationConfig().DefaultLogger
 	config := injection.GetGeneralConfig().PaymentDB
 	sourceName := config.GetPostgresDBString()
-	fmt.Println("DATABASE NAME : ---> ", sourceName)
+	logger.InfoLogger.Println("DATABASE NAME : ---> ", sourceName)
 
 	db, err := sql.Open("postgres", sourceName)
 	if err != nil {
@@ -60,9 +60,9 @@ func InitPostgresDB() repos.CheckoutDBInterface {
 	d := repos.NewCheckoutRepo(db)
 
 	if pingErr := d.Ping(); pingErr != nil {
-		logger.ErrorLogger.Printf("database ping error : %+v\n", pingErr)
+		logger.ErrorLogger.Printf("🚨 database ping error : %+v\n", pingErr)
 	}
 	// logger.InfoLogger.Println("database connected ! 🎇")
-	logger.ErrorLogger.Println("database connected")
+	logger.InfoLogger.Println("database connected")
 	return d
 }
